@@ -12,9 +12,14 @@ While beginning to move from Docker Compose centered application deploys to Kube
 
 ## Usage
 
-It is assumed a the file you want to substitute value into and a `.env` file exists where you are running the command.
+Prerequisites:
+
+1. The file you want to replace environment variables in your PWD
+2. An .env file with the values to replace in your PWD
 
 `env-replace <file_name>`
+
+You don't declare the .env file. It's assumed to exist and must be called ".env"
 
 ### Example file to have values replaced
 ```
