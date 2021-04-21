@@ -16,3 +16,4 @@
 
 *.yaml
 *.env
+dist/
