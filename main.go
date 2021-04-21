@@ -4,13 +4,24 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 func main() {
-	envMap := getEnvMap(".env")
-	var processedYamlFile = getProcessedYaml("test.yaml", envMap)
-	fmt.Print(processedYamlFile)
+	if len(os.Args) == 2 {
+		pwd, err := os.Getwd()
+		checkError(err)
+
+		var envFilePath = filepath.Join(pwd, ".env")
+		var yamlFilePath = filepath.Join(pwd, os.Args[1])
+
+		envMap := getEnvMap(envFilePath)
+		var processedYamlFile = getProcessedYaml(yamlFilePath, envMap)
+		fmt.Println(processedYamlFile)
+	} else {
+		panic("Invalid parameters")
+	}
 }
 
 func checkError(e error) {
