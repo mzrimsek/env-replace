@@ -68,15 +68,20 @@ checkLatestVersion() {
 # for that binary.
 downloadFile() {
   VERSION=$(echo ${TAG} | sed 's/v//')
-  ENV_REPLACE_DIST="env-replace_${VERSION}_${OS}_${ARCH}"
+  ENV_REPLACE_DIST="${APP_NAME}_${VERSION}_${OS}_${ARCH}.tar.gz"
   DOWNLOAD_URL="$REPO_URL/releases/download/$TAG/$ENV_REPLACE_DIST"
   ENV_REPLACE_TMP_ROOT="$(mktemp -dt env-replace-binary-XXXXXX)"
-  ENV_REPLACE_TMP_FILE="$ENV_REPLACE_TMP_ROOT/$ENV_REPLACE_DIST"
+  ENV_REPLACE_TMP_TAR_FILE="$ENV_REPLACE_TMP_ROOT/$ENV_REPLACE_DIST"
   if type "curl" > /dev/null; then
-    curl -SsL "$DOWNLOAD_URL" -o "$ENV_REPLACE_TMP_FILE"
+    curl -SsL "$DOWNLOAD_URL" -o "$ENV_REPLACE_TMP_TAR_FILE"
   elif type "wget" > /dev/null; then
-    wget -q -O "$ENV_REPLACE_TMP_FILE" "$DOWNLOAD_URL"
+    wget -q -O "$ENV_REPLACE_TMP_TAR_FILE" "$DOWNLOAD_URL"
   fi
+}
+
+unpackTar() {
+  tar xzf $ENV_REPLACE_TMP_TAR_FILE -C $ENV_REPLACE_TMP_ROOT $APP_NAME
+  ENV_REPLACE_TMP_FILE="$ENV_REPLACE_TMP_ROOT/$APP_NAME"
 }
 
 # installFile verifies the SHA256 for the file, then unpacks and
@@ -135,5 +140,6 @@ initOS
 verifySupported
 checkLatestVersion
 downloadFile
+unpackTar
 installFile
 cleanup
