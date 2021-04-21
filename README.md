@@ -8,4 +8,24 @@ While beginning to move from Docker Compose centered application deploys to Kube
 
 ## Usage
 
-TODO: Add usage
+It is assumed a the file you want to substitute value into and a `.env` file exists where you are running the command.
+
+`env-replace <file_name>`
+
+### Example file to have values replaced
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${SERVICE_NAME}
+spec:
+  ports:
+    - protocol: TCP
+      port: ${SERVICE_PORT}
+```
+
+### Example .env file
+```
+SERVICE_NAME=test-service
+SERVICE_PORT=8080
+```
