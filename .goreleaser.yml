@@ -15,3 +15,7 @@ archives:
       amd64: x86_64
 changelog:
   sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
