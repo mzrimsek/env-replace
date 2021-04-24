@@ -41,11 +41,13 @@ func getEnvMap(envFilePath string) map[string]string {
 
 	for scanner.Scan() {
 		var envPair = scanner.Text()
-		var pair = strings.Split(envPair, "=")
+		if envPair != "" {
+			var pair = strings.Split(envPair, "=")
 
-		var key = pair[0]
-		var value = pair[1]
-		envMap[key] = value
+			var key = pair[0]
+			var value = pair[1]
+			envMap[key] = value
+		}
 	}
 
 	envFile.Close()
